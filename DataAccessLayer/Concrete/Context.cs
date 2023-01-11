@@ -12,7 +12,7 @@ namespace DataAccessLayer.Concrete
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=DESKTOP-4F05DOV;database=CoreBlogDb;integrated security=true;Encrypt=false");
+            optionsBuilder.UseSqlServer("server=ALI;database=CoreBlogDb;integrated security=true;Encrypt=false");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

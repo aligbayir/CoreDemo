@@ -6,13 +6,13 @@
 
 <h1>Mesaj Detay Sayfası</h1>
 @Html.Label("Mesaj ID")
-@Html.LabelFor(x=>x.MessageID, new {@class="form-control"})
+@Html.TextBoxFor(x=>x.MessageID, new {@class="form-control"})
 <br />
 @Html.Label("Mesaj Konusu")
-@Html.LabelFor(x=>x.Subject, new {@class="form-control"})
+@Html.TextBoxFor(x=>x.Subject, new {@class="form-control"})
 <br />
 @Html.Label("Mesaj İçeriği")
-@Html.LabelFor(x=>x.MessageDetails, new {@class="form-control"})
+@Html.TextAreaFor(x=>x.MessageDetails,15,3, new {@class="form-control"})
 <br />
-<button class="btn btn-success">Mesajlara Dön</button>
+<a class="btn btn-success" href="/Message/InBox">Mesajlara Dön</a>
 

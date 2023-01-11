@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
 using CoreDemo.Models;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -14,8 +15,11 @@ namespace CoreDemo.Controllers
     {
         WriterManager wm = new WriterManager(new EfWriterRepository());
 
+        [Authorize]
         public IActionResult Index()
         {
+            var usermail = User.Identity.Name;
+            ViewBag.v=usermail;
             return View();
         }
         public IActionResult WriterProfile()
@@ -41,14 +45,18 @@ namespace CoreDemo.Controllers
         {
             return PartialView();
         }
-        [AllowAnonymous]
+        
         [HttpGet]
         public IActionResult WriterEditProfile()
         {
-            var writervalues = wm.GetById(1);
+            Context c = new Context();
+
+            var userMail = User.Identity.Name;
+            var writerID = c.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterID).FirstOrDefault();
+            var writervalues = wm.GetById(writerID);
             return View(writervalues);
         }
-        [AllowAnonymous]
+        
         [HttpPost]
         public IActionResult WriterEditProfile(Writer p)
         {
