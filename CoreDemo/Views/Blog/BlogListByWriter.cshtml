@@ -1,0 +1,66 @@
+﻿@using EntityLayer.Concrete
+@model List<Blog>
+@{
+    ViewData["Title"] = "BlogListByWriter";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+<h1>BlogListByWriter</h1>
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Blog Başlığı</th>
+        <th>Oluşturma Tarihi</th>
+        <th>Kategori</th>
+        <th>Durum</th>
+        <th>Sil</th>
+        <th>Düzenle</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>@item.BlogID</th>
+            <td>@item.BlogTitle</td>
+            <td>@(((DateTime)item.BlogCreateDate).ToString("dd-MM-yyyy"))</td>
+            <td>@item.Category.CategoryName</td>
+            @if (item.BlogStatus == true)
+            {
+                <td>Yayında</td>
+            }
+            else
+            {
+                <td>Yayında Değil</td>
+            }
+            <td><a onclick="return confirm('Silmek istediğine emin misin?');" id="btndelete" href="/Blog/DeleteBlog/@item.BlogID" class="btn btn-danger">Sil</a></td>
+            <td><a href="/Blog/EditBlog/@item.BlogID" class="btn btn-info">Düzenle</a></td>
+        </tr>
+    }
+</table>
+<a href="/Blog/BlogAdd" class="btn btn-primary">Yeni Blog Oluştur</a>
+
+
+<script>
+    $("#btndelete").click(function () {
+        swal({
+            title: "Silmek İstediğine Emin misin?",
+            text: "Sildikten Sonra Geri Alamazsın!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Silme Başarılı", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Vazgeçtin");
+                }
+            });
+    })
+
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<a href="~/lib/jquery/dist/jquery.min.map"></a>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
